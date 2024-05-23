@@ -6,12 +6,14 @@
 #define MAX_LENGTH 1820
 
 char *string_clone(const char *str, size_t length) {
-    char clon[MAX_LENGTH];
-    char *output=clon;
+    // char clon[MAX_LENGTH];
+    // char *output=clon;
+    char *output = malloc(sizeof(char)*(length+1));
     for (size_t i=0; i<length;i++) {
         output[i] = str[i];
     }
     output[length] = '\0';
+
     return output;
 }
 
@@ -56,7 +58,7 @@ int main(void) {
          "                Jedi....\n" ANSI_WHITE;
     char *copy=NULL;
 
-    copy = string_clone(original, sizeof(original)/sizeof(*original));
+    copy = string_clone(original, sizeof(original)/sizeof(*original)); // length = 1812
     printf("Original:\n" ANSI_CYAN
             " %s\n", original);
     copy[0] = 'A';
@@ -67,7 +69,9 @@ int main(void) {
     copy[5] = 'g';
     printf("Copia   :\n" ANSI_CYAN
            " %s\n", copy);
-
+    
+    free(copy);
+    
     return EXIT_SUCCESS;
 }
 

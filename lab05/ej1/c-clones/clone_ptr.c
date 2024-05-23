@@ -5,16 +5,21 @@
 
 #define MAX_LENGTH 1820
 
-char *string_clone(const char *str) {
-    char *clone=NULL;
-    clone = malloc(strlen(str)*sizeof(char));
-    char *output = strcpy(clone, str);
+char *string_clone(const char *str, size_t length) {
+    // char clon[MAX_LENGTH];
+    // char *output=clon;
+    char *output = malloc(sizeof(char)*(length+1));
+    for (size_t i=0; i<length;i++) {
+        output[i] = str[i];
+    }
+    output[length] = '\0';
+
     return output;
 }
 
 
 int main(void) {
-    char original[]=""
+    char *original=""
          "______ time ago in a galaxy far, far away...\n\n\n"
          ANSI_BRGOLD
          "         _______..___________.     ___      .______             \n"
@@ -53,7 +58,7 @@ int main(void) {
          "                Jedi....\n" ANSI_WHITE;
     char *copy=NULL;
 
-    copy = string_clone(original);
+    copy = string_clone(original, MAX_LENGTH); // length = 1812
     printf("Original:\n" ANSI_CYAN
             " %s\n", original);
     copy[0] = 'A';
@@ -64,7 +69,11 @@ int main(void) {
     copy[5] = 'g';
     printf("Copia   :\n" ANSI_CYAN
            " %s\n", copy);
-
+    
+    free(copy);
+    
     return EXIT_SUCCESS;
 }
 
+/* El error sucede en que el length pasado por parametro a string_clone no corresponde con la cantidad de caracteres
+que realmente necesita para funcionar */
