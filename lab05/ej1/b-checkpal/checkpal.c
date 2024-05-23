@@ -5,7 +5,7 @@
 
 #include "strfuncs.h"
 
-#define MAX_LENGTH 20
+#define MAX_LENGTH 50
 
 #define SIZEOF_ARRAY(s) (sizeof(s) / sizeof(*s))
 
@@ -15,15 +15,29 @@ int main(void) {
     char *filtered=NULL;
 
     printf("Ingrese un texto (no más de %d símbolos) para verificar palíndromo: ", MAX_LENGTH);
-    scanf("%s", user_input);
+    //scanf("%s", user_input);
+
+    char *input = fgets(user_input, MAX_LENGTH, stdin);
+
+    if(input == NULL) {
+        printf("Error reading chars.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    user_input[string_length(user_input) - 1] = '\0';   
     filtered = string_filter(user_input, ignore_chars[0]);
+
+    char *tmp_str;
     for (unsigned int i=0; i < SIZEOF_ARRAY(ignore_chars); i++) {
-        filtered = string_filter(filtered, ignore_chars[i]);
+        tmp_str = string_filter(filtered, ignore_chars[i]);
+        free(filtered);
+        filtered = tmp_str;
     }
 
     printf("El texto:\n\n"
             "\"%s\" \n\n"
             "%s un palíndromo.\n\n", user_input, string_is_symmetric(filtered) ? "Es": "NO es");
+    free(filtered);
     return EXIT_SUCCESS;
 }
 
