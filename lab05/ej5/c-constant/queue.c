@@ -8,6 +8,7 @@
 struct s_queue {
     unsigned int size;
     struct s_node *first;
+    struct s_node *last;
 };
 
 struct s_node {
@@ -43,28 +44,30 @@ queue queue_empty(void) {
     q = malloc(sizeof(struct s_queue));
     q->size = 0;
     q->first = NULL;
+    q->last = NULL;
     assert(invrep(q) && queue_is_empty(q));
     return q;
 }
 
-queue queue_enqueue(queue q, queue_elem e) {
+queue queue_enqueue(queue q, queue_elem e) { // a diferencia de la implementacion en el inciso a, esto funciona muchisimo mas rapido y de manera casi inmediata.
     assert(invrep(q));
     struct s_node *new_node = create_node(e);
     if (q->first==NULL) {
         q->first = new_node;
-        q->size = 1;
-    } else {
-        struct s_node *p = NULL;
-        p = q->first;
-        while (p->next != NULL){
-            p = p->next;
-        }
-        p->next = new_node;
-        q->size = q->size + 1;
+        q->last = q->first;
     }
+    else {
+        struct s_node *p = NULL;
+        p = q->last;
+        p->next = new_node;
+        q->last = p->next;
+    }
+    q->size = q->size + 1;
     assert(invrep(q) && !queue_is_empty(q));
     return q;
 }
+
+
 
 bool queue_is_empty(queue q) {
     assert(invrep(q));
@@ -88,6 +91,9 @@ queue queue_dequeue(queue q) {
     q->first = q->first->next;
     killme = destroy_node(killme);
     q->size = q->size - 1;
+    if(q->size == 0){
+        q->last = NULL;
+    }
     assert(invrep(q));
     return q;
 

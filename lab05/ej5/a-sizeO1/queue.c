@@ -87,6 +87,7 @@ queue queue_dequeue(queue q) {
     struct s_node * killme=q->first;
     q->first = q->first->next;
     killme = destroy_node(killme);
+    q->size = q->size - 1;
     assert(invrep(q));
     return q;
 
