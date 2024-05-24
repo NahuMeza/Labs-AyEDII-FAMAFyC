@@ -6,9 +6,7 @@
 #include "queue.h"
 
 struct s_queue {
-    /*
-     * COMPLETAR
-     */
+    unsigned int size;
     struct s_node *first;
 };
 
@@ -42,10 +40,9 @@ invrep(queue q) {
 
 queue queue_empty(void) {
     queue q=NULL;
-    /*
-     * COMPLETAR
-     *
-     */
+    q = malloc(sizeof(struct s_queue));
+    q->size = 0;
+    q->first = NULL;
     assert(invrep(q) && queue_is_empty(q));
     return q;
 }
@@ -55,11 +52,15 @@ queue queue_enqueue(queue q, queue_elem e) {
     struct s_node *new_node = create_node(e);
     if (q->first==NULL) {
         q->first = new_node;
+        q->size = 1;
     } else {
-        /*
-         * COMPLETAR
-         *
-         */
+        struct s_node *p = NULL;
+        p = q->first;
+        while (p->next != NULL){
+            p = p->next;
+        }
+        p->next = new_node;
+        q->size = q->size + 1;
     }
     assert(invrep(q) && !queue_is_empty(q));
     return q;
@@ -77,10 +78,7 @@ queue_elem queue_first(queue q) {
 unsigned int queue_size(queue q) {
     assert(invrep(q));
     unsigned int size=0;
-    /*
-     * COMPLETAR
-     *
-     */
+    size = q->size;
     return size;
 }
 
