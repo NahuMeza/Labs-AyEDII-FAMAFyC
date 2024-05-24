@@ -70,9 +70,9 @@ bool stack_is_empty(stack s) {
 
 stack_elem *stack_to_array(stack s) {
     stack_elem *arr = NULL;
-    unsigned int size = s->size;
 
     if(s != NULL) {
+        unsigned int size = s->size;
         arr = malloc(s->size*sizeof(struct _s_stack));
         for(unsigned int i = 0; i < size; i++){
             arr[i] = s->elems[i];
