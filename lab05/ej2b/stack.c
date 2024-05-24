@@ -48,7 +48,6 @@ bool stack_is_empty(stack s) {
 }
 
 stack_elem *stack_to_array(stack s) {
-    assert(s != NULL);
     stack_elem *arr = NULL;
     unsigned int size = s->size;
 
