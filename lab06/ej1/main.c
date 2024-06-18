@@ -84,7 +84,7 @@ int main(int argc, char *argv[]) {
             finish = true;
         }
         else if(option == 1){
-            abb_dump(tree, ABB_IN_ORDER);
+            abb_dump(tree, ABB_PRE_ORDER);
             printf("\n");
         }
         else if(option == 2){
